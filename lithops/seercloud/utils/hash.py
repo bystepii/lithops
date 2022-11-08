@@ -1,10 +1,9 @@
-from operator import xor
-from struct import unpack
-
 # TODO: correct hash importation on cloud
 # from seercloud.src.chash import chash
-import numpy as np
 import hashlib
+
+import numpy as np
+
 
 def stable_hash(obj, part_num: int):
     return  int(hashlib.md5(str(obj).encode("UTF-8")).hexdigest(), 32) % part_num

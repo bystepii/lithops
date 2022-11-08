@@ -1,10 +1,8 @@
-from seercloud.IO.write import write_obj
-from seercloud.operation import Operation
-import pandas as pd
-import pickle
+from lithops.seercloud.IO.write import write_obj
+from lithops.seercloud.scheduler.data import Data
+from lithops.seercloud.utils.serialize import serialize
 
-from seercloud.scheduler.data import Data
-from seercloud.utils.serialize import serialize
+from . import Operation
 
 
 class Write(Operation):

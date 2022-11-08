@@ -1,6 +1,6 @@
-from seercloud.metadata import TaskInfo
-from seercloud.metadata.data_info import DataInfo
-from seercloud.scheduler.data import Data
+from lithops.seercloud.metadata import TaskInfo
+from lithops.seercloud.metadata.data_info import DataInfo
+from lithops.seercloud.scheduler.data import Data
 
 
 class Operation:

@@ -1,6 +1,7 @@
 
+from lithops.seercloud.scheduler.data import Data
+
 from . import Operation
-from ..scheduler.data import Data
 
 
 class Collect(Operation):

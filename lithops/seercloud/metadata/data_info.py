@@ -1,7 +1,6 @@
-import pandas as pd
 import numpy as np
-from lithops import Storage
 
+from lithops import Storage
 
 
 class DataInfo():

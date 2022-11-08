@@ -1,4 +1,4 @@
-from seercloud.operation import Operation
+from . import Operation
 
 
 class Groupby(Operation):

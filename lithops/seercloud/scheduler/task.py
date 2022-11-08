@@ -1,12 +1,12 @@
-from typing import Union, List
+import logging
+from typing import List
 
 from lithops import Storage
 
-import logging
-from seercloud.metadata import DataInfo, TaskInfo
-from seercloud.operation import Operation
-from seercloud.scheduler.data import Data
+from lithops.seercloud.metadata import DataInfo, TaskInfo
+from lithops.seercloud.operation import Operation
 
+from .data import Data
 
 # TODO: save execution metrics
 

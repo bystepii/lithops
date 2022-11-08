@@ -3,10 +3,10 @@ from io import BytesIO, StringIO
 from typing import Tuple, Union, List, TextIO, BinaryIO
 
 import pandas as pd
+
 from lithops import Storage
 
-from seercloud.metadata import DataInfo
-
+from lithops.seercloud.metadata import DataInfo
 
 BOUND_EXTRACTION_MARGIN = 500
 

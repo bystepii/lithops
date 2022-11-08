@@ -5,19 +5,21 @@ import pickle
 import random
 import time
 from io import BytesIO
-from lithops.storage.backends.localhost.localhost import LocalhostStorageBackend
+
+import numpy as np
+import pandas as pd
 
 from ibm_botocore.exceptions import ClientError
+
 from lithops import Storage
+from lithops.storage.backends.localhost.localhost import LocalhostStorageBackend
 
-from seercloud.IO.read import read_obj
-from seercloud.IO.write import write_obj
-from seercloud.operation import Operation
-import pandas as pd
-import numpy as np
+from lithops.seercloud.IO.read import read_obj
+from lithops.seercloud.IO.write import write_obj
+from lithops.seercloud.scheduler.data import Data
+from lithops.seercloud.utils.serialize import serialize_to_file, deserialize
 
-from seercloud.scheduler.data import Data
-from seercloud.utils.serialize import serialize_to_file, deserialize
+from . import Operation
 
 PART_NUM_SUFIX:str = "meta"
 MAX_RETRIES:int = 10

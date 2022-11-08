@@ -2,19 +2,19 @@ import logging
 import random
 from typing import Dict, List, Optional, Any, Tuple, Type
 
-from seercloud.operation import Operation, Exchange, Sort, Scan
-from .stage import Stage, gen_data_info
-
 from lithops import FunctionExecutor, Storage
 
-from seercloud.logging.logging import setup_logger
-from seercloud.utils.scheduling import gen_surname
-from ..IO.utils import get_data_size
-from ..inference.infer import search_optimal
-from ..operation.groupby import Groupby
-from ..operation.sample import gen_sample_stage
-from ..utils.key_pointer import _partition_conds, _key_pointer_conds
-from ..utils.parse import parse
+from lithops.seercloud.operation import Operation, Exchange, Sort, Scan
+from lithops.seercloud.logging.logging import setup_logger
+from lithops.seercloud.utils.scheduling import gen_surname
+from lithops.seercloud.IO.utils import get_data_size
+from lithops.seercloud.inference.infer import search_optimal
+from lithops.seercloud.operation.groupby import Groupby
+from lithops.seercloud.operation.sample import gen_sample_stage
+from lithops.seercloud.utils.key_pointer import _partition_conds, _key_pointer_conds
+from lithops.seercloud.utils.parse import parse
+
+from .stage import Stage, gen_data_info
 
 logger = logging.getLogger(__name__)
 

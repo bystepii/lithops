@@ -1,4 +1,4 @@
-from seercloud.operation.Partition import Partition
+from lithops.seercloud.operation.Partition import Partition
 
 
 class TaskInfo():

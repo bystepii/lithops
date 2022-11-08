@@ -4,16 +4,16 @@ import random
 import re
 from math import floor
 
-from lithops import Storage, FunctionExecutor
-
-from seercloud.IO.utils import get_data_size
-from seercloud.IO.write import write_obj
-from seercloud.IO.read import read_and_adjust
-from seercloud.metadata import TaskInfo
 import numpy as np
 
-from seercloud.metadata.data_info import DataInfo
-from seercloud.scheduler.stage import Stage, gen_data_info, gen_task_info
+from lithops import Storage, FunctionExecutor
+
+from lithops.seercloud.IO.read import read_and_adjust
+from lithops.seercloud.IO.utils import get_data_size
+from lithops.seercloud.IO.write import write_obj
+from lithops.seercloud.metadata import TaskInfo
+from lithops.seercloud.metadata.data_info import DataInfo
+from lithops.seercloud.scheduler.stage import Stage, gen_data_info, gen_task_info
 
 MAX_SAMPLE_SIZE:int = 300 * 1024 * 1024
 SAMPLE_RATIO:float = 0.01

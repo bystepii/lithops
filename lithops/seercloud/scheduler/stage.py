@@ -3,10 +3,11 @@ from typing import List
 
 from lithops import FunctionExecutor
 
-from seercloud.metadata import TaskInfo, DataInfo
-from seercloud.operation import Operation
-from seercloud.operation.Partition import Partition
-from seercloud.scheduler.task import Task, run_task
+from lithops.seercloud.metadata import TaskInfo, DataInfo
+from lithops.seercloud.operation import Operation
+from lithops.seercloud.operation.Partition import Partition
+
+from .task import Task, run_task
 
 logger = logging.getLogger(__name__)
 

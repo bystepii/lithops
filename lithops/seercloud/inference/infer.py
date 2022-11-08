@@ -1,11 +1,10 @@
+import logging
 import os
 import pickle
 
-import logging
-
 import numpy as np
 
-from seercloud.inference.config import *
+from .config import *
 
 logger = logging.getLogger(__name__)
 

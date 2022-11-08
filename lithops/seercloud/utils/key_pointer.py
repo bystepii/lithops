@@ -1,9 +1,9 @@
 from typing import Dict, List, Tuple
 
-from seercloud.operation import Exchange, Sort
-from seercloud.operation.Partition import Partition
-from seercloud.operation.groupby import Groupby
-from seercloud.scheduler.stage import Stage
+from lithops.seercloud.operation import Exchange, Sort
+from lithops.seercloud.operation.Partition import Partition
+from lithops.seercloud.operation.groupby import Groupby
+from lithops.seercloud.scheduler.stage import Stage
 
 
 # Study succession of operations and type of data, and check if key-pointer and

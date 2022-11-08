@@ -1,25 +1,26 @@
 import logging
+import os
 import pickle
 from concurrent.futures.thread import ThreadPoolExecutor
-from enum import Enum
 from math import floor
-from typing import Tuple, Union
 from queue import Queue
+from typing import Tuple, Union
+
 import numpy as np
-from lithops.storage import Storage
-import os
 import pandas as pd
 
-from seercloud.IO.read import read_and_adjust, adjust_bounds, read_obj
-from seercloud.IO.utils import get_data_size
-from seercloud.inference.config import CHUNK_SIZE
-from seercloud.operation import Operation
-from seercloud.config import DEFAULT_THREAD_NUM
-from seercloud.operation.Partition import Partition
-from seercloud.operation.sample import SAMPLE_SUFIX
-from seercloud.scheduler.data import Data
-from seercloud.utils.hash import hash2
+from lithops import Storage
 
+from lithops.seercloud.IO.read import read_and_adjust, read_obj
+from lithops.seercloud.IO.utils import get_data_size
+from lithops.seercloud.config import DEFAULT_THREAD_NUM
+from lithops.seercloud.inference.config import CHUNK_SIZE
+from lithops.seercloud.scheduler.data import Data
+from lithops.seercloud.utils.hash import hash2
+
+from . import Operation
+from . import Partition
+from .sample import SAMPLE_SUFIX
 
 DATAFRAME_ALLOCATION_MARGIN = 0.1
 

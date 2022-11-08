@@ -1,6 +1,5 @@
-import copy
-import os
 import logging
+import os
 
 LOGGER_LEVEL = 'info'
 LOGGER_STREAM = 'ext://sys.stderr'

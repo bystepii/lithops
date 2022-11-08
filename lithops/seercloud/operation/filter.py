@@ -1,7 +1,8 @@
 from typing import Callable
 
-from seercloud.operation import Operation
-from seercloud.scheduler.data import Data
+from lithops.seercloud.scheduler.data import Data
+
+from . import Operation
 
 
 class Filter(Operation):

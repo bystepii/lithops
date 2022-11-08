@@ -2,9 +2,9 @@ from math import floor
 
 from lithops import Storage
 
-from seercloud.IO.read import read_and_adjust
-from seercloud.IO.utils import get_data_size
-from seercloud.metadata import DataInfo
+from lithops.seercloud.IO.read import read_and_adjust
+from lithops.seercloud.IO.utils import get_data_size
+from lithops.seercloud.metadata import DataInfo
 
 READ_BLOCK = 50 * 1024
 START_BYTES = 10 * 1024

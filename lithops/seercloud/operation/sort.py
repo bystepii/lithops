@@ -1,7 +1,6 @@
-import pandas as pd
+from lithops.seercloud.scheduler.data import Data
 
-from seercloud.operation import Operation
-from seercloud.scheduler.data import Data
+from . import Operation
 
 
 class Sort(Operation):
