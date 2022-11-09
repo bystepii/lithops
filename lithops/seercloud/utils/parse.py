@@ -9,14 +9,15 @@ from lithops.seercloud.metadata import DataInfo
 READ_BLOCK = 50 * 1024
 START_BYTES = 10 * 1024
 
+
 def parse(storage: Storage, bucket: str, key: str, data_info: DataInfo):
-    '''
+    """
     Approximate number of rows in dataset
     @param storage: storage client
     @param bucket: bucket to read
     @param key: path of the structured object to read
     @return: approximate number of rows of the object
-    '''
+    """
 
     data_size = get_data_size(storage, bucket, key)
 

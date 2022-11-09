@@ -11,6 +11,7 @@ from .task import Task, run_task
 
 logger = logging.getLogger(__name__)
 
+
 class Stage():
 
     # Task info
@@ -46,29 +47,29 @@ class Stage():
         self.do_kp = False
         self.partition = None
 
-
     def add_op(self, operation: Operation, **kwargs):
         self.operations.append(operation)
 
     def set_num_tasks(self, num_tasks: int):
         self.num_tasks = num_tasks
 
-
     def run(self, executor: FunctionExecutor):
 
-
-        self.tasks = [ Task(gen_task_info(self, ti), gen_data_info(self))
-                       for ti in range(self.num_tasks) ]
+        self.tasks = [Task(gen_task_info(self, ti), gen_data_info(self))
+                      for ti in range(self.num_tasks)]
 
         for t in self.tasks:
             t.operations = self.operations
 
         fts = executor.map(run_task, self.tasks)
-        logger.info("Running stage %d... (%s->%s): %d tasks" % (self.stage_id, self.surname_in, self.surname_out, self.num_tasks))
+        logger.info("Running stage %d... (%s->%s): %d tasks" % (self.stage_id,
+                                                                self.surname_in,
+                                                                self.surname_out,
+                                                                self.num_tasks))
         res = executor.get_result(fts)
         # print(res)
         # print(sum(res))
-        logger.info("Finished stage %d" % ( self.stage_id))
+        logger.info("Finished stage %d" % self.stage_id)
 
     def set_surname_in(self, surname: str):
         self.surname_in = surname
@@ -79,33 +80,32 @@ class Stage():
 
 def gen_task_info(stage: Stage, task_id: int) -> TaskInfo:
 
-    ti = TaskInfo(task_id = task_id,
-                stage_id = stage.stage_id,
-                job_id = stage.job_id,
-                num_tasks = stage.num_tasks,
-                read_path = stage.read_path,
-                read_bucket = stage.read_bucket,
-                write_path = stage.write_path,
-                write_bucket = stage.write_bucket,
-                surname_in = stage.surname_in,
-                surname_out = stage.surname_out
-    )
+    ti = TaskInfo(task_id=task_id,
+                  stage_id=stage.stage_id,
+                  job_id=stage.job_id,
+                  num_tasks=stage.num_tasks,
+                  read_path=stage.read_path,
+                  read_bucket=stage.read_bucket,
+                  write_path=stage.write_path,
+                  write_bucket=stage.write_bucket,
+                  surname_in=stage.surname_in,
+                  surname_out=stage.surname_out
+                  )
 
     ti.do_kp = stage.do_kp
     ti.partition = stage.partition
 
     return ti
 
+
 def gen_data_info(stage: Stage) -> DataInfo:
 
     di = DataInfo(
-        delimiter = stage.delimiter,
-        types = stage.types,
-        key =  stage.key if hasattr(stage, "key") else None
+        delimiter=stage.delimiter,
+        types=stage.types,
+        key=stage.key if hasattr(stage, "key") else None
     )
 
     di.approx_rows = stage.approx_rows if hasattr(stage, "approx_rows") else None
 
     return di
-
-

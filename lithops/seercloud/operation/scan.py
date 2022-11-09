@@ -20,7 +20,7 @@ from lithops.seercloud.utils.hash import hash2
 
 from . import Operation
 from . import Partition
-from .sample import SAMPLE_SUFIX
+from .sample import SAMPLE_SUFFIX
 
 DATAFRAME_ALLOCATION_MARGIN = 0.1
 
@@ -77,15 +77,13 @@ class Scan(Operation):
 
         # key-pointer conditions
         if self.task_info.do_kp:
-            print("Concurrent scan and partitioning %s"%("with hash" if self.task_info.do_hash else "None"))
+            print("Concurrent scan and partitioning %s" % ("with hash" if self.task_info.do_hash else "None"))
             ed, hash_list = self._concurrent_read(self.task_info.partition, self.key)
             data.data = ed
             data.hash_list = hash_list
         else:
             print("Simple scan")
             self._chunk_merger(data)
-
-
 
     def _concurrent_read(self, do_hash: bool, key: str) -> Tuple[pd.DataFrame, Union[list, np.ndarray, None]]:
 
@@ -127,10 +125,10 @@ class Scan(Operation):
                 # part_size = len(read_part)
 
                 df, part_size = read_and_adjust(storage=self.storage, read_bucket=self.read_bucket,
-                                                read_path=self.read_path, data_info = self.data_info,
-                                                lower_bound = self.read_bounds[c_i], upper_bound= self.read_bounds[c_i + 1] - 1,
+                                                read_path=self.read_path, data_info=self.data_info,
+                                                lower_bound=self.read_bounds[c_i],
+                                                upper_bound=self.read_bounds[c_i + 1] - 1,
                                                 total_size=self.total_size)
-
 
                 with open("c_{}".format(c_i), 'wb') as f:
                     pickle.dump(df, f)
@@ -154,7 +152,7 @@ class Scan(Operation):
         df_columns = {nm: np.empty(my_row_num,
                                    dtype=self.data_info.dtypes[nm]) for nm in self.data_info.columns}
         key_pointer_struct = {
-            'key': np.empty( my_row_num,  dtype= 'uint32' )
+            'key': np.empty(my_row_num,  dtype='uint32')
         }
 
         while True:
@@ -231,7 +229,6 @@ class Scan(Operation):
 
         for c_i in range(self.num_bounds):
 
-
             chunk, part_size = read_and_adjust(storage=self.storage, read_bucket=self.read_bucket,
                                                read_path=self.read_path, data_info=self.data_info,
                                                lower_bound=self.read_bounds[c_i],
@@ -263,8 +260,6 @@ class Scan(Operation):
 
         print(data.hash_list[:10])
 
-
-
     def _get_read_range(self):
         """
         Calculate byte range to read from a dataset, given the id of the task.
@@ -280,23 +275,21 @@ class Scan(Operation):
         # self.lower_bound, self.upper_bound = adjust_bounds(self.storage, self.read_bucket, self.read_path,
         #                                                    self.lower_bound, self.upper_bound, self.total_size)
 
-        print("Scanning bytes=%d-%d (%d)"%(self.lower_bound, self.upper_bound,
-                                           self.upper_bound - self.lower_bound))
-
+        print("Scanning bytes=%d-%d (%d)" % (self.lower_bound, self.upper_bound,
+                                             self.upper_bound - self.lower_bound))
 
     def explain(self):
-        return "%s (%s/%s)"%(self.__class__.__name__, self.read_bucket, self.read_path)
+        return "%s (%s/%s)" % (self.__class__.__name__, self.read_bucket, self.read_path)
 
     def get_segment_info(self):
 
-        sufixes = [SAMPLE_SUFIX, self.task_info.surname_out]
+        suffixes = [SAMPLE_SUFFIX, self.task_info.surname_out]
 
         try:
 
             self.segment_info = pickle.loads(read_obj(self.storage, self.read_bucket,
-                                         self.read_path, sufixes))
+                                                      self.read_path, suffixes))
 
-        except Exception as e:
+        except Exception:
 
             self.segment_info = None
-

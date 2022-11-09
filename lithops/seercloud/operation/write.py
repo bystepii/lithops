@@ -30,14 +30,13 @@ class Write(Operation):
             write_obj(storage=self.storage,
                       Bucket=self.bucket,
                       Key=self.task_info.read_path,
-                      sufixes=["out", str(self.task_info.surname_out), str(self.task_info.task_id)],
+                      suffixes=["out", str(self.task_info.surname_out), str(self.task_info.task_id)],
                       delimiter="/",
-                      Body= body)
+                      Body=body)
         else:
             write_obj(storage=self.storage,
                       Bucket=self.bucket,
-                      Key= self.key,
-                      sufixes=["%d" % (self.task_info.task_id)],
+                      Key=self.key,
+                      suffixes=["%d" % self.task_info.task_id],
                       Body=body,
                       delimiter="/")
-

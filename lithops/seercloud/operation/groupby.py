@@ -8,4 +8,3 @@ class Groupby(Operation):
     def __init__(self, key: str = '0'):
 
         self.key = key
-

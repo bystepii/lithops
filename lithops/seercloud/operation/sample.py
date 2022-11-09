@@ -15,17 +15,18 @@ from lithops.seercloud.metadata import TaskInfo
 from lithops.seercloud.metadata.data_info import DataInfo
 from lithops.seercloud.scheduler.stage import Stage, gen_data_info, gen_task_info
 
-MAX_SAMPLE_SIZE:int = 300 * 1024 * 1024
-SAMPLE_RATIO:float = 0.01
-SAMPLE_FRAGMENTS:int = 20
-START_MARGIN:float = 0.02
-END_MARGIN:float = 0.02
+MAX_SAMPLE_SIZE: int = 300 * 1024 * 1024
+SAMPLE_RATIO: float = 0.01
+SAMPLE_FRAGMENTS: int = 20
+START_MARGIN: float = 0.02
+END_MARGIN: float = 0.02
 
-SAMPLE_SUFIX:str = "sampled"
+SAMPLE_SUFFIX: str = "sampled"
 
 logger = logging.getLogger(__name__)
 
 # TODO: sampling of intermediate data
+
 
 class Sample():
 
@@ -36,7 +37,6 @@ class Sample():
 
     read_bucket: str
     read_path: str
-
 
     def __init__(self, read_bucket: str, read_path: str,
                  data_info: DataInfo, task_info: TaskInfo, key: str):
@@ -51,12 +51,10 @@ class Sample():
 
         self.storage = Storage()
 
-
         ds_size = get_data_size(self.storage, self.read_bucket, self.read_path)
 
-
         start_limit = int(ds_size * START_MARGIN)
-        end_limit = int(ds_size * ( 1 - END_MARGIN ))
+        end_limit = int(ds_size * (1 - END_MARGIN))
 
         choosable_size = end_limit - start_limit
 
@@ -71,16 +69,15 @@ class Sample():
 
         keys_arrays = []
 
-
         # Read from each bound a fragment size, adjusting limits
         for f in selected_fragments:
 
             lower_bound = start_limit + f * fragment_size
             upper_bound = lower_bound + fragment_size
 
-            df, part_size = read_and_adjust(storage = self.storage,
-                                            read_bucket= self.read_bucket, read_path=self.read_path,
-                                            data_info = self.data_info, lower_bound = lower_bound,
+            df, part_size = read_and_adjust(storage=self.storage,
+                                            read_bucket=self.read_bucket, read_path=self.read_path,
+                                            data_info=self.data_info, lower_bound=lower_bound,
                                             upper_bound=upper_bound, total_size=end_limit)
 
             keys_arrays.append(np.array(df[self.key]))
@@ -90,17 +87,16 @@ class Sample():
         keys.sort()
 
         # Find quantiles (num tasks)
-        quantiles = [ i * 1 / self.task_info.num_tasks for i in range(1, self.task_info.num_tasks) ]
+        quantiles = [i * 1 / self.task_info.num_tasks for i in range(1, self.task_info.num_tasks)]
         if str(df[self.key].dtype) not in ['bytes', 'str', 'object'] and \
                 re.match("\|S[0-9]*", str(df[self.key].dtype)) is None:
-            segment_bounds = [ np.quantile(keys, q) for q in quantiles ]
+            segment_bounds = [np.quantile(keys, q) for q in quantiles]
         else:
-            segment_bounds = [ keys[int(q * len(keys))] for q in quantiles]
+            segment_bounds = [keys[int(q * len(keys))] for q in quantiles]
 
-        # write function (path, op_sufix, task)
-        sufixes = [ SAMPLE_SUFIX, self.task_info.surname_out ]
-        write_obj(self.storage, self.read_bucket, self.read_path, sufixes, pickle.dumps(segment_bounds))
-
+        # write function (path, op_suffix, task)
+        suffixes = [SAMPLE_SUFFIX, self.task_info.surname_out]
+        write_obj(self.storage, self.read_bucket, self.read_path, suffixes, pickle.dumps(segment_bounds))
 
     def run(self, executor: FunctionExecutor):
 
@@ -119,11 +115,12 @@ def gen_sample_stage(stage: Stage):
     data_info: DataInfo = gen_data_info(stage)
     task_info: TaskInfo = gen_task_info(stage, 0)
 
-    return Sample(read_bucket = task_info.read_bucket,
-                  read_path = task_info.read_path,
-                  data_info = data_info,
-                  task_info = task_info,
-                  key = data_info.key )
+    return Sample(read_bucket=task_info.read_bucket,
+                  read_path=task_info.read_path,
+                  data_info=data_info,
+                  task_info=task_info,
+                  key=data_info.key)
+
 
 def run_sample(sample: Sample):
 

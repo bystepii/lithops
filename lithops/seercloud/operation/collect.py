@@ -10,7 +10,7 @@ class Collect(Operation):
 
     def __init__(self, **kwargs):
 
-       super(Collect, self).__init__(**kwargs)
+        super(Collect, self).__init__(**kwargs)
 
     def run(self, data: Data):
 

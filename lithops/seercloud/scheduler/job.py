@@ -129,7 +129,6 @@ class Job():
         for d in self.dependencies:
             self._connect_stages(d[1], d[0])
 
-
     def _setup_initial(self, stage: Stage):
 
         stage.set_surname_in(gen_surname())
@@ -144,21 +143,19 @@ class Job():
         stage.delimiter = source_operation.delimiter
         stage.types = source_operation.types
 
-        parsed_data = parse(storage = self.storage,
-                                  bucket=source_operation.read_bucket,
-                                  key=source_operation.read_path,
-                                  data_info=gen_data_info(stage))
+        parsed_data = parse(storage=self.storage,
+                            bucket=source_operation.read_bucket,
+                            key=source_operation.read_path,
+                            data_info=gen_data_info(stage))
 
         stage.approx_rows = parsed_data["approx_rows"]
         if parsed_data["types"] is not None:
             stage.types = parsed_data["types"]
 
-        logger.info("%s/%s: approximately %d records"%(source_operation.read_bucket,
-                                                        source_operation.read_path,
-                                                        stage.approx_rows))
-        logger.info("Data types: %s"%(str(stage.types)))
-
-
+        logger.info("%s/%s: approximately %d records" % (source_operation.read_bucket,
+                                                         source_operation.read_path,
+                                                         stage.approx_rows))
+        logger.info("Data types: %s" % (str(stage.types)))
 
     def _connect_stages(self, child_stage_id: int, parent_stage_id: int):
 
@@ -170,7 +167,7 @@ class Job():
         if isinstance(parent.operations[-1], Exchange):
             child.operations.insert(0, Exchange(write=False))
 
-        if True in [ isinstance(op, Sort) or isinstance(op, Groupby) for op in child.operations ]:
+        if True in [isinstance(op, Sort) or isinstance(op, Groupby) for op in child.operations]:
             for op in child.operations:
                 if isinstance(op, Sort) or isinstance(op, Groupby):
                     shuffle_op = op
@@ -186,8 +183,6 @@ class Job():
         child.types = parent.types
         child.approx_rows = parent.approx_rows
 
-
-
     def prepare_parameters(self):
 
         #  Data info and task info based on first source operation (currently
@@ -200,7 +195,6 @@ class Job():
             data_size = get_data_size(self.storage, bucket, path)
 
             logger.info("Stage %s: %.2f MB of data" % (s, data_size / (1024) ** 2))
-
 
             worker_num = search_optimal(data_size, self.lithops_config)
             self.stages[s].num_tasks = worker_num
@@ -221,11 +215,11 @@ class Job():
 
     def set_preparatory_steps(self):
 
-        self.preparatory_steps = { si: list() for si in self.stages.keys() }
+        self.preparatory_steps = {si: list() for si in self.stages.keys()}
 
-        # Detect prepararatory steps (sampling, parsing...)
+        # Detect preparatory steps (sampling, parsing...)
         for d in self.dependencies:
-            if True in [ isinstance(op, Sort) for op in self.stages[d[1]].operations ]:
+            if True in [isinstance(op, Sort) for op in self.stages[d[1]].operations]:
                 if isinstance(self.stages[d[1]].operations[0], Exchange):
                     self.preparatory_steps[0].append(
                         gen_sample_stage(self.stages[d[0]])
@@ -235,9 +229,7 @@ class Job():
 
         for si, s in self.stages.items():
             for op in self.preparatory_steps[si]:
-                print("prep: %s"%(op.explain()))
-            print("Stage %d:"%(si))
+                print("prep: %s" % (op.explain()))
+            print("Stage %d:" % si)
             for op in s.operations:
-                print("\t· %s"%(op.explain()))
-
-
+                print("\t· %s" % (op.explain()))

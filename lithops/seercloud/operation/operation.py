@@ -20,7 +20,7 @@ class Operation:
     def set_task_info(self, task_info: TaskInfo):
         self.task_info = task_info
 
-    def set_data_info(self, data_info: DataInfo ):
+    def set_data_info(self, data_info: DataInfo):
         self.data_info = data_info
 
     def explain(self) -> str:

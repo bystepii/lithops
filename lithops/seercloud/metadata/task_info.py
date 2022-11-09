@@ -3,7 +3,6 @@ from lithops.seercloud.operation.Partition import Partition
 
 class TaskInfo():
 
-
     surname_in: str
     surname_out: str
 
@@ -11,7 +10,7 @@ class TaskInfo():
     partition: Partition
 
     def __init__(self, task_id: int, stage_id: int, job_id: int, num_tasks: int,
-                 read_path: str, read_bucket:str, write_path: str, write_bucket: str,
+                 read_path: str, read_bucket: str, write_path: str, write_bucket: str,
                  surname_in: str, surname_out: str,
                  **kwargs):
 
@@ -26,6 +25,3 @@ class TaskInfo():
         self.surname_in = surname_in
         self.surname_out = surname_out
         self.__dict__.update(kwargs)
-
-
-

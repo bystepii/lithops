@@ -3,6 +3,7 @@ from typing import Union
 import pandas as pd
 import numpy as np
 
+
 class Data:
 
     data: Union[pd.DataFrame, np.ndarray, int, float, str]

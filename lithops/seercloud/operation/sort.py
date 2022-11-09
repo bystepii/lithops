@@ -16,7 +16,3 @@ class Sort(Operation):
     def run(self, data: Data):
 
         data.data.sort_values(self.key, inplace=True)
-
-
-
-

@@ -8,6 +8,7 @@ from .config import *
 
 logger = logging.getLogger(__name__)
 
+
 def search_optimal(dataset_size: int, config: dict()):
 
     # Dataset size in bytes.
@@ -17,21 +18,14 @@ def search_optimal(dataset_size: int, config: dict()):
     # We establish the minimum and maximum worker number
     # to analyze as multiples of the worker number
     # step.
-    minimum_number_worker = int((dataset_size / \
-                                 (worker_memory * 1024 ** 2
-                                  * MAXIMUM_WORKER_MEMORY_PERC))
-                                / WORKER_NUMBER_STEP) \
-                            * WORKER_NUMBER_STEP
+    minimum_number_worker = int((dataset_size / (worker_memory * 1024 ** 2 * MAXIMUM_WORKER_MEMORY_PERC))
+                                / WORKER_NUMBER_STEP) * WORKER_NUMBER_STEP
     minimum_number_worker = max(minimum_number_worker, 3)
-    maximum_number_worker = int((dataset_size / \
-                                 (worker_memory * 1024 ** 2
-                                  * MINIMUM_WORKER_MEMORY_PERC))
-                                / WORKER_NUMBER_STEP) \
-                            * WORKER_NUMBER_STEP
+    maximum_number_worker = int((dataset_size / (worker_memory * 1024 ** 2 * MINIMUM_WORKER_MEMORY_PERC))
+                                / WORKER_NUMBER_STEP) * WORKER_NUMBER_STEP
     maximum_number_worker = max(min(maximum_number_worker, 1000), 3)
 
     #  print("{} - {}".format(minimum_number_worker, maximum_number_worker))
-
 
     # Check if equation info exists
     if not os.path.isfile(pred_file_path("ibm_cos")):

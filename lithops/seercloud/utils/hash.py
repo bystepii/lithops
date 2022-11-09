@@ -6,7 +6,8 @@ import numpy as np
 
 
 def stable_hash(obj, part_num: int):
-    return  int(hashlib.md5(str(obj).encode("UTF-8")).hexdigest(), 32) % part_num
+    return int(hashlib.md5(str(obj).encode("UTF-8")).hexdigest(), 32) % part_num
+
 
 def hash2(key_array: np.ndarray, part_number: int):
 
@@ -17,7 +18,3 @@ def hash2(key_array: np.ndarray, part_number: int):
     # else:
     #     return np.array([ stable_hash(s, part_number) for s in key_array ])
     return np.array([stable_hash(s, part_number) for s in key_array])
-
-
-
-

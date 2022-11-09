@@ -30,5 +30,4 @@ def chash(np.ndarray key_array, unsigned int row_number, unsigned int reducer_nu
         return [x for x in index_array[:row_number]]
     finally:
         # return the previously allocated memory to the system
-        free(index_array)
-
+        free(<void *> index_array)

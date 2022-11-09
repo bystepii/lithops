@@ -12,6 +12,7 @@ from .data import Data
 
 logger = logging.getLogger(__name__)
 
+
 class Task():
 
     data_info: DataInfo
@@ -28,14 +29,13 @@ class Task():
         self.task_info = task_info
         self.data_info = data_info
 
-
     def run(self):
 
         self.storage = Storage()
 
         for op in self.operations:
 
-            print("Running %s"%(op.__class__.__name__))
+            print("Running %s" % op.__class__.__name__)
 
             op.set_task_info(self.task_info)
             op.set_data_info(self.data_info)
@@ -58,6 +58,3 @@ def run_task(task: Task):
     print("Stage %d - task %d" % (task.task_info.stage_id, task.task_info.task_id))
 
     return task.run()
-
-
-
